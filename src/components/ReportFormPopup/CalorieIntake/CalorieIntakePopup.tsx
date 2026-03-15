@@ -4,6 +4,8 @@ import '../popup.css'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import DatePicker from 'react-date-picker';
+import 'react-date-picker/dist/DatePicker.css';
+import 'react-calendar/dist/Calendar.css';
 import { AiFillDelete, AiOutlineClose } from 'react-icons/ai'
 import { TimeClock } from '@mui/x-date-pickers/TimeClock';
 import dayjs, { Dayjs } from 'dayjs';
@@ -20,6 +22,7 @@ const CalorieIntakePopup: React.FC<CaloriIntakePopupProps> = ({ setShowCalorieIn
 
   const selectedDay = (val: any) => {
     console.log(val)
+    setDate(val)
   };
 
 

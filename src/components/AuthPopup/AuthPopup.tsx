@@ -36,6 +36,9 @@ interface SignupFormData {
 const AuthPopup: React.FC<AuthPopupProps> = ({ setShowpopup }) => {
 
     const [showSignup, setShowSignup] = React.useState<boolean>(false)
+    const [showOtp, setShowOtp] = React.useState<boolean>(false)
+    const [expectedOtp, setExpectedOtp] = React.useState<string>('')
+    const [enteredOtp, setEnteredOtp] = React.useState<string>('')
     const [signupformData, setSignupFormData] = useState<SignupFormData>({
         name: '',
         email: '',
@@ -86,8 +89,6 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ setShowpopup }) => {
             })
     }
     const handleSignup = () => {
-        // console.log(process.env.NEXT_PUBLIC_BACKEND_API);
-
         fetch(process.env.NEXT_PUBLIC_BACKEND_API + '/auth/register', {
             method: 'POST',
             headers: {
@@ -98,12 +99,27 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ setShowpopup }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
-
                 if (data.ok) {
-                    toast.success(data.message)
-
-                    setShowSignup(false)
+                    toast.success("Registration success! Sending OTP...")
+                    
+                    fetch(process.env.NEXT_PUBLIC_BACKEND_API + '/auth/sendotp', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email: signupformData.email })
+                    })
+                        .then(res => res.json())
+                        .then(otpData => {
+                            if(otpData.ok){
+                                setExpectedOtp(otpData.data.otp.toString())
+                                setShowSignup(false)
+                                setShowOtp(true)
+                                toast.success("OTP sent to your email!")
+                            } else {
+                                toast.error(otpData.message)
+                            }
+                        })
                 }
                 else {
                     toast.error(data.message)
@@ -111,6 +127,35 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ setShowpopup }) => {
             }).catch(err => {
                 console.log(err)
             })
+    }
+
+    const verifyOtpAndLogin = () => {
+        if (enteredOtp === expectedOtp) {
+            toast.success("OTP Verified! Logging you in...");
+            fetch(process.env.NEXT_PUBLIC_BACKEND_API + '/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: signupformData.email,
+                    password: signupformData.password
+                }),
+                credentials: 'include'
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.ok) {
+                    toast.success("Logged in successfully!");
+                    setShowpopup(false);
+                    setShowOtp(false);
+                    window.location.reload();
+                } else {
+                    toast.error(data.message);
+                }
+            })
+            .catch(err => console.log(err));
+        } else {
+            toast.error("Incorrect OTP. Please try again.");
+        }
     }
     return (
         <div className='popup'>
@@ -122,6 +167,32 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ setShowpopup }) => {
                 <AiOutlineClose />
             </button>
             {
+                showOtp ? (
+                    <div className='authform'>
+                        <div className='left'>
+                            <Image src={logo} alt="Logo" />
+                        </div>
+                        <div className='right'>
+                            <h1>Verify your email</h1>
+                            <p>We've sent an OTP to {signupformData.email || 'your email'}.</p>
+                            <form>
+                                <Input
+                                    color="warning"
+                                    placeholder="Enter 6-digit OTP"
+                                    size="lg"
+                                    variant="solid"
+                                    onChange={(e) => setEnteredOtp(e.target.value)}
+                                />
+                                <button
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        verifyOtpAndLogin();
+                                    }}
+                                >Verify & Login</button>
+                            </form>
+                        </div>
+                    </div>
+                ) :
                 showSignup ? (
                     <div className='authform'>
 
@@ -278,7 +349,6 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ setShowpopup }) => {
                                 <button
                                     onClick={(e) => {
                                         e.preventDefault()
-                                        window.location.reload();
                                         handleSignup();
                                     }}
                                 >Signup</button>
