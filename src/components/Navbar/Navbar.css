@@ -37,6 +37,7 @@ nav .nav-logo img {
 }
 
 nav .nav-logo span {
+    display: inline-block;
     font-size: 1.8rem;
     font-weight: 800;
     letter-spacing: 2px;
@@ -45,6 +46,22 @@ nav .nav-logo span {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: glowingText 2s infinite ease-in-out;
+}
+
+nav .nav-logo span.loading-text {
+    animation: glowingText 2s infinite ease-in-out, flipText 1.5s infinite linear;
+}
+
+@keyframes glowingText {
+    0% { filter: drop-shadow(0 0 5px rgba(255, 194, 14, 0.4)); }
+    50% { filter: drop-shadow(0 0 20px rgba(255, 194, 14, 1)); }
+    100% { filter: drop-shadow(0 0 5px rgba(255, 194, 14, 0.4)); }
+}
+
+@keyframes flipText {
+    0% { transform: perspective(400px) rotateY(0deg); }
+    100% { transform: perspective(400px) rotateY(360deg); }
 }
 
 nav .nav-links {

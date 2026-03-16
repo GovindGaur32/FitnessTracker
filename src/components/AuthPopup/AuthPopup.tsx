@@ -184,6 +184,7 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ setShowpopup }) => {
                                     onChange={(e) => setEnteredOtp(e.target.value)}
                                 />
                                 <button
+                                    className="submit-btn"
                                     onClick={(e) => {
                                         e.preventDefault();
                                         verifyOtpAndLogin();
@@ -347,15 +348,18 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ setShowpopup }) => {
                                 </LocalizationProvider>
 
                                 <button
+                                    className="submit-btn"
                                     onClick={(e) => {
                                         e.preventDefault()
                                         handleSignup();
                                     }}
                                 >Signup</button>
                             </form>
-                            <p>Already have an account?  <button onClick={() => {
-                                setShowSignup(false)
-                            }}>Login</button></p>
+                            <div className="auth-switch">
+                                <p>Already have an account?  <button onClick={() => {
+                                    setShowSignup(false)
+                                }}>Login</button></p>
+                            </div>
                         </div>
 
                     </div>
@@ -395,15 +399,18 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ setShowpopup }) => {
                                     }}
                                 />
                                 <button
+                                    className="submit-btn"
                                     onClick={(e) => {
                                         e.preventDefault()
                                         handleLogin()
                                     }}
                                 >Login</button>
                             </form>
-                            <p>Don't have an account?  <button onClick={() => {
-                                setShowSignup(true)
-                            }}>Signup</button></p>
+                            <div className="auth-switch">
+                                <p>Don't have an account?  <button onClick={() => {
+                                    setShowSignup(true)
+                                }}>Signup</button></p>
+                            </div>
                         </div>
 
                     </div>

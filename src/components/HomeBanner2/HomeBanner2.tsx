@@ -84,12 +84,12 @@ const HomeBanner2 = () => {
             spaceBetween: 20,
           },
           768: {
-            slidesPerView: 4,
-            spaceBetween: 40,
+            slidesPerView: 3,
+            spaceBetween: 30,
           },
           1024: {
-            slidesPerView: 5,
-            spaceBetween: 50,
+            slidesPerView: 4,
+            spaceBetween: 40,
           },
         }}
         autoplay={{
@@ -103,7 +103,7 @@ const HomeBanner2 = () => {
           workouts && workouts.map((item, index) => {
             return (
               <SwiperSlide key={index} >
-                <div className='swiper-slide'
+                <div className='workout-card'
                   style={{
                     backgroundImage: `url(${item.imageUrl})`,
                   }}
@@ -111,7 +111,7 @@ const HomeBanner2 = () => {
                     window.location.href = `/workout/${item.type}`
                   }}
                 >
-                  <div className='swiper-slide-content'>
+                  <div className='workout-card-content'>
                     <h2>{item.type}</h2>
                     <p>{item.durationInMin} min</p>
                   </div>

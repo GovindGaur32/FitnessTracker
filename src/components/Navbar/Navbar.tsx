@@ -11,8 +11,10 @@ import AuthPopup from '../AuthPopup/AuthPopup'
 const Navbar = () => {
     const [isloggedin, setIsloggedin] = React.useState<boolean>(false)
     const [showpopup, setShowpopup] = React.useState<boolean>(false)
+    const [isLoading, setIsLoading] = React.useState<boolean>(true)
     
     const checklogin = async () => {
+        setIsLoading(true)
         fetch(process.env.NEXT_PUBLIC_BACKEND_API + '/auth/checklogin', {
             method: 'POST',
             credentials: 'include',
@@ -23,11 +25,14 @@ const Navbar = () => {
                     setIsloggedin(true)
                 }
                 else{
-                    setIsloggedin(false)
+                     setIsloggedin(false)
                 }
             })
             .catch(err => {
                 console.log(err)
+            })
+            .finally(() => {
+                setIsLoading(false)
             })
     }
 
@@ -39,7 +44,7 @@ const Navbar = () => {
         <nav>
             <div className="nav-logo" onClick={() => window.location.href='/'}>
                 <Image src={logo} alt="FitFreak Logo" priority />
-                <span>FREAKS</span>
+                <span className={isLoading ? 'loading-text' : ''}>FREAKS</span>
             </div>
 
             <div className="nav-links">
