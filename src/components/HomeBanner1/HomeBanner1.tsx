@@ -83,19 +83,25 @@ const HomeBanner1 = () => {
   }, [])
 
   function simplifyFraction(numerator: number, denominator: number): [number, number] {
-    function gcd(a: number, b: number):number{
-      return (b == 0 ? a : gcd(b, a % b))
+    if (!numerator || !denominator || isNaN(numerator) || isNaN(denominator)) {
+      return [numerator || 0, denominator || 0];
     }
-    const commonDivisor:number = gcd(numerator, denominator);
+    
+    numerator = Math.floor(numerator);
+    denominator = Math.floor(denominator);
+    
+    function gcd(a: number, b: number):number{
+      return (b === 0 ? a : gcd(b, a % b))
+    }
+    const commonDivisor:number = gcd(Math.abs(numerator), Math.abs(denominator));
 
     // Simplify the fraction
+    if (commonDivisor === 0) return [numerator, denominator];
     const simplifiedNumerator = Number(numerator / commonDivisor);
     const simplifiedDenominator = Number(denominator / commonDivisor);
-     const a= Math.floor(simplifiedNumerator)
-      const b =Math.floor(simplifiedDenominator)
-      return [a,b];
-
-
+    const a= Math.floor(simplifiedNumerator)
+    const b =Math.floor(simplifiedDenominator)
+    return [a,b];
   }
   return (
     <div className='meters'>

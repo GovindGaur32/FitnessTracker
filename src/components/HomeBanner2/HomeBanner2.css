@@ -1,52 +1,187 @@
-.workout-card {
-    width: 100%;
-    height: 300px;
-    border-radius: 20px;
-    border: 1px solid #e6e6e6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-size: cover;
-    background-position: center;
-    overflow: hidden;
-    transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
-}
-
-.workout-card:hover {
-    cursor: pointer;
-    transform: scale(1.05) translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    z-index: 10;
-}
-
-.workout-card .workout-card-content {
-    background-color: rgba(0, 0, 0, 0.45);
+.blog-section {
+    padding: 60px 20px;
+    background-color: transparent;
     color: white;
+}
+
+.blog-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.blog-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.blog-title span {
+    color: #ffb700; /* or match theme: #ff416c or something else */
+}
+
+/* Let's try to match the app theme, usually white/black/red or similar. I'll use a hot red/orange a bit like #f4511e or just standard #ffb700 from fitness themes. But the user's previous theme was likely dark. Let's use #F4511E for accent. */
+.blog-title span {
+    color: #f4511e;
+}
+
+.blog-subtitle {
+    font-size: 1.1rem;
+    color: #a0a0a0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.blogSwiper {
+    padding: 20px 10px 60px 10px !important;
+}
+
+.blog-card {
+    background: #1a1a1a;
+    border-radius: 20px;
+    overflow: hidden;
     position: relative;
-    top: 0;
-    left: 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid #333;
+}
+
+.blog-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 20px 40px rgba(244, 81, 30, 0.2);
+    border-color: #f4511e;
+}
+
+.blog-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.blog-image {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.blog-card:hover .blog-image {
+    transform: scale(1.1);
+}
+
+.blog-category {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #f4511e;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 2;
+    box-shadow: 0 4px 10px rgba(244, 81, 30, 0.4);
+}
+
+.blog-content {
+    padding: 30px;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    transition: background-color 0.4s ease-out;
+    flex-grow: 1;
 }
 
-.workout-card:hover .workout-card-content {
-    background-color: rgba(255, 65, 108, 0.3);
-}
-
-
-.workout-card .workout-card-content h2 {
-    font-size: 1.8rem;
-    font-weight: 900;
-    text-align: center;
-}
-
-.workout-card .workout-card-content p {
-    font-size: 1.2rem;
+.blog-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    color: #888;
     font-weight: 500;
-    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.blog-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.blog-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #fff;
+    line-height: 1.3;
+    transition: color 0.3s ease;
+}
+
+.blog-card:hover .blog-card-title {
+    color: #f4511e;
+}
+
+.blog-card-desc {
+    font-size: 1rem;
+    color: #bbbbbb;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    flex-grow: 1;
+}
+
+.read-more-btn {
+    display: inline-flex;
+    align-items: center;
+    color: #f4511e;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: auto;
+    transition: all 0.3s ease;
+}
+
+.read-more-btn .arrow {
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+}
+
+.read-more-btn:hover {
+    color: #ff7b54;
+}
+
+.read-more-btn:hover .arrow {
+    transform: translateX(5px);
+}
+
+/* Swiper overrides for aesthetic */
+.swiper-pagination-bullet {
+    background-color: #555 !important;
+    opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #f4511e !important;
+    transform: scale(1.3);
+}
+
+.swiper-button-next, .swiper-button-prev {
+    color: #f4511e !important;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 50%;
+    transform: scale(0.6);
+}
+
+.swiper-button-next:hover, .swiper-button-prev:hover {
+    background: #f4511e;
+    color: white !important;
 }
