@@ -55,7 +55,7 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ setShowpopup }) => {
         password: '',
     })
 
-   
+
 
 
 
@@ -71,7 +71,7 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ setShowpopup }) => {
             body: JSON.stringify(loginformData),
             credentials: 'include'
         })
-        .then(res => res.json())
+            .then(res => res.json())
             .then(data => {
                 console.log(data)
 
@@ -101,7 +101,7 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ setShowpopup }) => {
             .then(data => {
                 if (data.ok) {
                     toast.success("Registration success! Sending OTP...")
-                    
+
                     fetch(process.env.NEXT_PUBLIC_BACKEND_API + '/auth/sendotp', {
                         method: 'POST',
                         headers: {
@@ -111,7 +111,7 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ setShowpopup }) => {
                     })
                         .then(res => res.json())
                         .then(otpData => {
-                            if(otpData.ok){
+                            if (otpData.ok) {
                                 setExpectedOtp(otpData.data.otp.toString())
                                 setShowSignup(false)
                                 setShowOtp(true)
@@ -141,18 +141,18 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ setShowpopup }) => {
                 }),
                 credentials: 'include'
             })
-            .then(res => res.json())
-            .then(data => {
-                if (data.ok) {
-                    toast.success("Logged in successfully!");
-                    setShowpopup(false);
-                    setShowOtp(false);
-                    window.location.reload();
-                } else {
-                    toast.error(data.message);
-                }
-            })
-            .catch(err => console.log(err));
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok) {
+                        toast.success("Logged in successfully!");
+                        setShowpopup(false);
+                        setShowOtp(false);
+                        window.location.reload();
+                    } else {
+                        toast.error(data.message);
+                    }
+                })
+                .catch(err => console.log(err));
         } else {
             toast.error("Incorrect OTP. Please try again.");
         }
@@ -194,227 +194,231 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ setShowpopup }) => {
                         </div>
                     </div>
                 ) :
-                showSignup ? (
-                    <div className='authform'>
+                    showSignup ? (
+                        <div className='authform'>
 
-                        <div className='left'>
-                            <Image src={logo} alt="Logo" />
-                        </div>
-                        <div className='right'>
-                            <h1>Signup to become a freak</h1>
-                            <form onSubmit={handleSignup}>
-                                <Input
-                                    color="warning"
-                                    placeholder="name"
-                                    size="lg"
-                                    variant="solid"
-                                    onChange={(e) => {
-                                        setSignupFormData({
-                                            ...signupformData,
-                                            name: e.target.value
-                                        })
-                                    }}
-                                />
-                                <Input
-                                    color="warning"
-                                    placeholder="email"
-                                    size="lg"
-                                    variant="solid"
+                            <div className='left'>
+                                <Image src={logo} alt="Logo" />
+                            </div>
+                            <div className='right'>
+                                <h1>Signup to become a freak</h1>
+                                <form onSubmit={handleSignup}>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
 
-                                    onChange={(e) => {
-                                        setSignupFormData({
-                                            ...signupformData,
-                                            email: e.target.value
-                                        })
-                                    }}
-                                />
-                                <Input
-                                    color="warning"
-                                    placeholder="password"
-                                    size="lg"
-                                    variant="solid"
-                                    type='password'
-
-                                    onChange={(e) => {
-                                        setSignupFormData({
-                                            ...signupformData,
-                                            password: e.target.value
-                                        })
-                                    }}
-                                />
-
-
-                                <Input color="warning" size="lg" variant="solid" type="number" placeholder='Weight in kg'
-                                    onChange={(e) => {
-                                        setSignupFormData({
-                                            ...signupformData,
-                                            weightInKg: parseFloat(e.target.value)
-                                        })
-                                    }}
-                                />
-
-                                <Select
-                                    color="warning"
-                                    placeholder="Activity Level"
-                                    size="lg"
-                                    variant="solid"
-
-                                    onChange={(
-                                        event: React.SyntheticEvent | null,
-                                        newValue: string | null,
-                                    ) => {
-                                        setSignupFormData({
-                                            ...signupformData,
-                                            activityLevel: newValue?.toString() || ''
-                                        })
-                                    }}
-                                >
-                                    <Option value="sedentary">Sedentary</Option>
-                                    <Option value="light">Light</Option>
-                                    <Option value="moderate">Moderate</Option>
-                                    <Option value="active">Active</Option>
-                                    <Option value="veryActive">Very Active</Option>
-                                </Select>
-
-                                <Select
-                                    color="warning"
-                                    placeholder="Goal"
-                                    size="lg"
-                                    variant="solid"
-
-                                    onChange={(
-                                        event: React.SyntheticEvent | null,
-                                        newValue: string | null,
-                                    ) => {
-                                        setSignupFormData({
-                                            ...signupformData,
-                                            goal: newValue?.toString() || ''
-                                        })
-                                    }}
-                                >
-                                    <Option value="weightLoss">Lose</Option>
-                                    <Option value="weightMaintain">Maintain</Option>
-                                    <Option value="weightGain">Gain</Option>
-                                </Select>
-
-                                <Select
-                                    color="warning"
-                                    placeholder="Gender"
-                                    size="lg"
-                                    variant="solid"
-
-                                    onChange={(
-                                        event: React.SyntheticEvent | null,
-                                        newValue: string | null,
-                                    ) => {
-                                        setSignupFormData({
-                                            ...signupformData,
-                                            gender: newValue?.toString() || ''
-                                        })
-                                    }}
-                                >
-                                    <Option value="male">Male</Option>
-                                    <Option value="female">Female</Option>
-                                    <Option value="other">Other</Option>
-                                </Select>
-
-                                <label htmlFor="">Height</label>
-
-
-                                <Input color="warning" size="lg" variant="solid" type="number" placeholder='cm'
-                                    onChange={(e) => {
-                                        setSignupFormData({
-                                            ...signupformData,
-                                            heightInCm: parseFloat(e.target.value)
-                                        })
-                                    }}
-                                />
-
-
-                                <label htmlFor="">Date of Birth</label>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DesktopDatePicker defaultValue={dayjs(new Date())}
-                                        sx={{
-                                            backgroundColor: 'white',
-                                        }}
-
-                                        onChange={(newValue) => {
+                                    <Input
+                                        color="warning"
+                                        placeholder="name"
+                                        size="lg"
+                                        variant="solid"
+                                        onChange={(e) => {
                                             setSignupFormData({
                                                 ...signupformData,
-                                                dob: new Date(newValue as any)
+                                                name: e.target.value
                                             })
                                         }}
                                     />
-                                </LocalizationProvider>
+                                    <Input
+                                        color="warning"
+                                        placeholder="email"
+                                        size="lg"
+                                        variant="solid"
 
-                                <button
-                                    className="submit-btn"
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        handleSignup();
-                                    }}
-                                >Signup</button>
-                            </form>
-                            <div className="auth-switch">
-                                <p>Already have an account?  <button onClick={() => {
-                                    setShowSignup(false)
-                                }}>Login</button></p>
+                                        onChange={(e) => {
+                                            setSignupFormData({
+                                                ...signupformData,
+                                                email: e.target.value
+                                            })
+                                        }}
+                                    />
+                                    <Input
+                                        color="warning"
+                                        placeholder="password"
+                                        size="lg"
+                                        variant="solid"
+                                        type='password'
+
+                                        onChange={(e) => {
+                                            setSignupFormData({
+                                                ...signupformData,
+                                                password: e.target.value
+                                            })
+                                        }}
+                                    />
+
+
+                                    <Input color="warning" size="lg" variant="solid" type="number" placeholder='Weight in kg'
+                                        onChange={(e) => {
+                                            setSignupFormData({
+                                                ...signupformData,
+                                                weightInKg: parseFloat(e.target.value)
+                                            })
+                                        }}
+                                    />
+
+                                    <Select
+                                        color="warning"
+                                        placeholder="Activity Level"
+                                        size="lg"
+                                        variant="solid"
+
+                                        onChange={(
+                                            event: React.SyntheticEvent | null,
+                                            newValue: string | null,
+                                        ) => {
+                                            setSignupFormData({
+                                                ...signupformData,
+                                                activityLevel: newValue?.toString() || ''
+                                            })
+                                        }}
+                                    >
+                                        <Option value="sedentary">Sedentary</Option>
+                                        <Option value="light">Light</Option>
+                                        <Option value="moderate">Moderate</Option>
+                                        <Option value="active">Active</Option>
+                                        <Option value="veryActive">Very Active</Option>
+                                    </Select>
+
+                                    <Select
+                                        color="warning"
+                                        placeholder="Goal"
+                                        size="lg"
+                                        variant="solid"
+
+                                        onChange={(
+                                            event: React.SyntheticEvent | null,
+                                            newValue: string | null,
+                                        ) => {
+                                            setSignupFormData({
+                                                ...signupformData,
+                                                goal: newValue?.toString() || ''
+                                            })
+                                        }}
+                                    >
+                                        <Option value="weightLoss">Lose</Option>
+                                        <Option value="weightMaintain">Maintain</Option>
+                                        <Option value="weightGain">Gain</Option>
+                                    </Select>
+
+                                    <Select
+                                        color="warning"
+                                        placeholder="Gender"
+                                        size="lg"
+                                        variant="solid"
+
+                                        onChange={(
+                                            event: React.SyntheticEvent | null,
+                                            newValue: string | null,
+                                        ) => {
+                                            setSignupFormData({
+                                                ...signupformData,
+                                                gender: newValue?.toString() || ''
+                                            })
+                                        }}
+                                    >
+                                        <Option value="male">Male</Option>
+                                        <Option value="female">Female</Option>
+                                        <Option value="other">Other</Option>
+                                    </Select>
+
+                                    <label htmlFor="">Height</label>
+
+
+                                    <Input color="warning" size="lg" variant="solid" type="number" placeholder='cm'
+                                        onChange={(e) => {
+                                            setSignupFormData({
+                                                ...signupformData,
+                                                heightInCm: parseFloat(e.target.value)
+                                            })
+                                        }}
+                                    />
+
+
+                                    <label htmlFor="">Date of Birth</label>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <DesktopDatePicker defaultValue={dayjs(new Date())}
+                                            sx={{
+                                                backgroundColor: 'white',
+                                            }}
+
+                                            onChange={(newValue) => {
+                                                setSignupFormData({
+                                                    ...signupformData,
+                                                    dob: new Date(newValue as any)
+                                                })
+                                            }}
+                                        />
+                                    </LocalizationProvider>
+
+                                    <button
+                                        className="submit-btn"
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            handleSignup();
+                                        }}
+                                    >Signup</button>
+                                </form>
+                                <div className="auth-switch">
+                                    <p>Already have an account?  <button onClick={() => {
+                                        setShowSignup(false)
+                                    }}>Login</button></p>
+                                </div>
                             </div>
+
                         </div>
-
-                    </div>
-                ) : (
-                    <div className='authform'>
-                        <div className='left'>
-                            <Image src={logo} alt="Logo" />
-                        </div>
-                        <div className='right'>
-                            <h1>Login to become a freak</h1>
-                            <form action="">
-                                <Input
-                                    color="warning"
-                                    placeholder="email"
-                                    size="lg"
-                                    variant="solid"
-                                    onChange={(e) => {
-                                        setLoginFormData({
-                                            ...loginformData,
-                                            email: e.target.value
-                                        })
-                                    }}
-                                />
-
-                                <Input
-                                    color="warning"
-                                    placeholder="password"
-                                    size="lg"
-                                    variant="solid"
-                                    type='password'
-
-                                    onChange={(e) => {
-                                        setLoginFormData({
-                                            ...loginformData,
-                                            password: e.target.value
-                                        })
-                                    }}
-                                />
-                                <button
-                                    className="submit-btn"
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        handleLogin()
-                                    }}
-                                >Login</button>
-                            </form>
-                            <div className="auth-switch">
-                                <p>Don't have an account?  <button onClick={() => {
-                                    setShowSignup(true)
-                                }}>Signup</button></p>
+                    ) : (
+                        <div className='authform'>
+                            <div className='left'>
+                                <Image src={logo} alt="Logo" />
                             </div>
-                        </div>
+                            <div className='right'>
+                                <h1>Login to become a freak</h1>
+                                <form action="">
+                                    <Input
+                                        color="warning"
+                                        placeholder="email"
+                                        size="lg"
+                                        variant="solid"
+                                        onChange={(e) => {
+                                            setLoginFormData({
+                                                ...loginformData,
+                                                email: e.target.value
+                                            })
+                                        }}
+                                    />
 
-                    </div>
-                )
+                                    <Input
+                                        color="warning"
+                                        placeholder="password"
+                                        size="lg"
+                                        variant="solid"
+                                        type='password'
+
+                                        onChange={(e) => {
+                                            setLoginFormData({
+                                                ...loginformData,
+                                                password: e.target.value
+                                            })
+                                        }}
+                                    />
+                                    <button
+                                        className="submit-btn"
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            handleLogin()
+                                        }}
+                                    >Login</button>
+                                </form>
+                                <div className="auth-switch">
+                                    <p>Don't have an account?  <button onClick={() => {
+                                        setShowSignup(true)
+                                    }}>Signup</button></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    )
             }
         </div>
     )

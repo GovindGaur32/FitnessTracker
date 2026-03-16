@@ -1,45 +1,123 @@
 .workout {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    background-color: #fff;
+    font-family: 'Inter', sans-serif;
+    margin: 40px auto;
+    padding: 40px 20px;
+    max-width: 1200px;
+    background-color: transparent;
     text-align: center;
+    color: #fff;
+    overflow-x: hidden;
 }
 
-.workout__exercises{
+.mainhead1 {
+    font-size: 5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+    background: linear-gradient(90deg, #f4511e, #ffb700);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 5px;
+    text-shadow: 0px 10px 20px rgba(244, 81, 30, 0.4);
+    animation: slideDown 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.workout__exercises {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    margin-top: 20px;
+    gap: 60px;
+    margin-top: 40px;
 }
 
 .workout__exercise {
     display: flex;
     align-items: center;
-    margin-top: 30px;
+    justify-content: space-between;
     width: 100%;
+    background: rgba(30, 30, 30, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s forwards;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Staggered entrance animation for items */
+.workout__exercise:nth-child(1) { animation-delay: 0.2s; }
+.workout__exercise:nth-child(2) { animation-delay: 0.4s; }
+.workout__exercise:nth-child(3) { animation-delay: 0.6s; }
+.workout__exercise:nth-child(4) { animation-delay: 0.8s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.workout__exercise:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(244, 81, 30, 0.15);
+    border-color: rgba(244, 81, 30, 0.3);
 }
 
 .workout__exercise--reverse {
     flex-direction: row-reverse;
 }
 
+.workout__exercise__image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
 
 .workout__exercise__image img {
     max-width: 100%;
-    height: auto;
-    min-width: 300px;
+    width: 350px;
+    object-fit: cover;
+    border-radius: 20px;
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.6));
+    border: 3px solid #f4511e;
+    transition: transform 0.5s ease;
+}
+
+.workout__exercise:hover .workout__exercise__image img {
+    transform: scale(1.08) rotate(-2deg);
+}
+
+.workout__exercise--reverse:hover .workout__exercise__image img {
+    transform: scale(1.08) rotate(2deg);
 }
 
 .workout__exercise__content {
+    flex: 1;
     display: flex;
     flex-direction: column;
     text-align: left;
-    gap: 10px;
-    margin-left: 20px;
+    gap: 15px;
+    padding: 0 40px;
+    z-index: 2;
 }
-
 
 .workout__exercise--reverse .workout__exercise__content {
     text-align: right;
@@ -47,39 +125,101 @@
 }
 
 .workout__exercise__content h2 {
-    font-size: 50px;
+    font-size: 3rem;
     font-weight: 900;
-    -webkit-text-stroke: 1px #333;
-    color: transparent;
-
+    color: #fff;
+    letter-spacing: 1px;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
 }
 
-.workout__exercise__content span{
-    font-size: 20px;
-    font-weight: 300;
-    color: #ffffff;
-    background-color: var(--col1);
-    padding: 5px 20px;
-    border-radius: 35px;
+.workout__exercise:hover .workout__exercise__content h2 {
+    color: #f4511e;
+}
+
+.workout__exercise__content span {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111;
+    background: linear-gradient(90deg, #f4511e, #ff8a00);
+    padding: 8px 25px;
+    border-radius: 50px;
     width: fit-content;
+    box-shadow: 0 5px 15px rgba(244, 81, 30, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .workout__exercise__content p {
-    font-size: 20px;
-    font-weight: 300;
-    color: var(--col1);
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #bbbbbb;
+    line-height: 1.8;
+    max-width: 90%;
 }
 
-.workout__exercises h3{
-    -webkit-text-stroke: 1px var(--col1);
-    color: transparent;
-    font-size: 10rem;
+.workout__exercises h3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(255, 255, 255, 0.03);
+    font-size: 25rem;
     font-weight: 900;
-    text-align: center;
-    border: 1px solid var(--col1);
-    width: 15rem;
-    aspect-ratio: 1/1;
-    border-radius: 50%;
+    margin: 0;
+    z-index: 0;
+    user-select: none;
+    line-height: 1;
 }
 
+/* Add an animated gradient glow behind cards */
+.workout__exercise::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(244, 81, 30, 0.1) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    z-index: 1;
+    pointer-events: none;
+}
 
+.workout__exercise:hover::before {
+    opacity: 1;
+    animation: rotateGlow 10s linear infinite;
+}
+
+@keyframes rotateGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 900px) {
+    .workout__exercise, .workout__exercise--reverse {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+    }
+
+    .workout__exercise__content {
+        padding: 20px 0 0 0;
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+    .workout__exercise__content p {
+        max-width: 100%;
+    }
+
+    .workout__exercises h3 {
+        font-size: 15rem;
+    }
+
+    .mainhead1 {
+        font-size: 3.5rem;
+    }
+}
